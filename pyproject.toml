@@ -5,7 +5,7 @@ description = "Test: Workspace exclusion with exclude patterns"
 requires-python = ">=3.10"
 
 dependencies = [
-    "requests>=2.31.0",
+    "requests>=2.31.0"
 ]
 
 # Workspace with exclusions
@@ -24,14 +24,23 @@ exclude = [
 
 # Expected workspace members:
 # ✓ projects/a (included by projects/*)
-# ✗ projects/b (excluded implicitly - no pyproject.toml)
+# ✗ projects/b (no pyproject.toml - just a container directory)
 # ✓ projects/b/ba (included by projects/b/*)
 # ✓ projects/b/bb (included by projects/b/*)
 # ✓ projects/c (included by projects/*)
-# ✗ projects/excluded1 (explicitly excluded)
-# ✗ projects/excluded2 (explicitly excluded)
+# ✗ projects/excluded1 (has pyproject.toml but explicitly excluded)
+# ✗ projects/excluded2 (has pyproject.toml but explicitly excluded)
 
 [dependency-groups]
 dev = [
     "pytest>=8.0.0",
 ]
+
+[tool.uv.sources]
+project-a = { workspace = true }
+project-ba = { workspace = true }
+project-bb = { workspace = true }
+project-c = { workspace = true }
+project-excluded1 = { workspace = true }
+project-excluded2 = { workspace = true }
+
